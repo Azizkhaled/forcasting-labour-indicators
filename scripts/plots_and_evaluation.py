@@ -11,7 +11,8 @@ from gluonts.evaluation import  Evaluator
 from models.feedforward import run_feed_forward_model
 from models.tft import run_tft
 from models.llama import llama_models
-
+import logging
+from logging.handlers import RotatingFileHandler
 
 class plots_and_evaluation:
     
@@ -141,36 +142,60 @@ class EvaluationResults:
             result_dict['Feature Indices'] = feature_indices
         return result_dict
 
-def evaluate_model(model_name, dataset_name, path_to_csv, model_type, batch_size=64, prediction_length = 11, context_length_factor = 6, max_epochs=100, with_external = False, initial_weights_path = r"lag-llama.ckpt", selected_features = None):
-    if model_name == 'lag-llama':
-        llama_models_obj = llama_models(path_to_csv=path_to_csv,batch_size =batch_size, prediction_length = prediction_length, context_length_factor = context_length_factor, with_external= with_external, selected_features= selected_features)
 
-        if model_type == 'baseline':
-            forecasts, ts = llama_models_obj.baseline_llama_on_csv()
-        elif model_type == 'fine_tuned':
-            forecasts, ts = llama_models_obj.fine_tuned_model(max_epochs=max_epochs, initial_weights_path= initial_weights_path)
-        else:
-            raise ValueError("Invalid model type. Choose 'baseline' or 'fine_tuned'.")
+# Setup logging
+logger = logging.getLogger('ModelEvaluationLogger')
+logger.setLevel(logging.DEBUG)
+handler = RotatingFileHandler('model_evaluation.log', maxBytes=100000, backupCount=5)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+def evaluate_model(model_name, dataset_name, path_to_csv, model_type, batch_size=64, prediction_length=11, context_length_factor=6, max_epochs=100, with_external=False, initial_weights_path=r"lag-llama.ckpt", selected_features=None):
+    try:
+        logger.info(f"Starting evaluation of {model_name} on {dataset_name}")
         
-    elif model_name == 'FeedForwardNetwork':
-        forecasts, ts = run_feed_forward_model(path_to_csv=path_to_csv, prediction_length = prediction_length, context_length_factor = context_length_factor, with_external= with_external, selected_features= selected_features)
+        if model_name == 'lag-llama':
+            llama_models_obj = llama_models(path_to_csv=path_to_csv, batch_size=batch_size, prediction_length=prediction_length, context_length_factor=context_length_factor, with_external=with_external, selected_features=selected_features)
+            if model_type == 'baseline':
+                forecasts, ts = llama_models_obj.baseline_llama_on_csv()
+                logger.debug("Loaded baseline llama model forecasts.")
+            elif model_type == 'fine_tuned':
+                forecasts, ts = llama_models_obj.fine_tuned_model(max_epochs=max_epochs, initial_weights_path=initial_weights_path)
+                logger.debug("Loaded fine-tuned llama model forecasts.")
+            else:
+                logger.error("Invalid model type provided.")
+                raise ValueError("Invalid model type. Choose 'baseline' or 'fine_tuned'.")
+        
+        elif model_name == 'FeedForwardNetwork':
+            forecasts, ts = run_feed_forward_model(path_to_csv=path_to_csv, prediction_length=prediction_length, context_length_factor=context_length_factor, with_external=with_external, selected_features=selected_features)
+            logger.debug("Loaded FeedForwardNetwork forecasts.")
+        
+        elif model_name == 'tft':
+            forecasts, ts = run_tft(path_to_csv=path_to_csv, prediction_length=prediction_length, context_length_factor=context_length_factor, with_external=with_external, selected_features=selected_features)
+            logger.debug("Loaded TFT forecasts.")
+        else:
+            logger.error("Model name not recognized.")
+            raise ValueError("Invalid model name provided. Please provide a valid model name.")
+        
+        agg_metrics, ts_metrics = plots_and_evaluation(forecasts, ts).evaluate()
+        overall_mape = agg_metrics['MAPE']
+        overall_mase = agg_metrics['MASE']
+        logger.info(f"Calculated aggregate metrics for {model_name}.")
 
-    elif model_name == 'tft':
-        forecasts, ts = run_tft(path_to_csv=path_to_csv, prediction_length = prediction_length, context_length_factor = context_length_factor, with_external= with_external, selected_features= selected_features)
+        # Handling specific dataset names
+        if 'job' in dataset_name:
+            column = dataset_name[:3] + '_VALUE_' + 'Total, all industries' + '_Job vacancies' if with_external else 'Total, all industries' #original 
+            column_2024 = 'Total, all industries'
+            all_industries_mape = ts_metrics[ts_metrics['item_id'] == column_2024]['MAPE'].item()
+        else:
+            column = dataset_name[:3] + '_VALUE_' + 'Industrial aggregate excluding unclassified businesses [11-91N]' if with_external else 'Industrial aggregate excluding unclassified businesses [11-91N]'
+            all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()
 
-    agg_metrics, ts_metrics = plots_and_evaluation(forecasts, ts).evaluate()
-    overall_mape = agg_metrics['MAPE']
-    overall_mase = agg_metrics['MASE']
+        logger.info(f"Model evaluation completed for {model_name} on {dataset_name}.")
+        return EvaluationResults(dataset_name, context_length_factor, model_type, overall_mape, overall_mase, all_industries_mape, forecasts, ts)
     
-    if 'job' in dataset_name:
-        print('ITS JOB TIME')
-        column= dataset_name[:3]+'_VALUE_'+'Total, all industries'+'_Job vacancies' if with_external else 'Total, all industries'
-        # print(f'col: {column}')
-        # print(f'item id: {ts_metrics}')
-        all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()
-    else: 
-        column = dataset_name[:3]+'_VALUE_'+'Industrial aggregate excluding unclassified businesses [11-91N]' if with_external else 'Industrial aggregate excluding unclassified businesses [11-91N]'
-        all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()
-
-    return EvaluationResults(dataset_name,context_length_factor, model_type, overall_mape, overall_mase, all_industries_mape, forecasts, ts)
+    except Exception as e:
+        logger.error(f"Error during model evaluation: {str(e)}", exc_info=True)
+        raise e
 

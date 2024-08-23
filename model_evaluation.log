@@ -1,0 +1,71 @@
+2024-08-15 15:28:22,760 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-15 15:40:38,239 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-15 15:51:19,025 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-15 15:51:19,148 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-15 15:51:19,150 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-15 15:51:22,041 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-15 15:57:25,095 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-15 15:57:25,377 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-15 15:57:25,379 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-15 15:57:30,807 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-15 16:04:24,395 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-15 16:04:24,512 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-15 16:04:24,514 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-15 16:04:27,457 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-15 16:10:44,131 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-15 16:10:44,361 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-15 16:10:44,362 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-15 16:10:49,289 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-20 01:30:40,660 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 01:34:48,201 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 01:36:12,339 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 01:36:12,435 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 01:36:12,437 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-20 01:45:02,956 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 01:46:48,291 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 01:46:48,374 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 01:46:48,375 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-20 01:53:09,936 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 01:56:29,634 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 01:56:29,719 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 01:56:29,720 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-20 02:22:58,535 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 02:25:44,411 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 02:25:44,503 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 02:25:44,504 - ModelEvaluationLogger - ERROR - Error during model evaluation: can only convert an array of size 1 to a Python scalar
+Traceback (most recent call last):
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 189, in evaluate_model
+    all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\core\base.py", line 418, in item
+    raise ValueError("can only convert an array of size 1 to a Python scalar")
+ValueError: can only convert an array of size 1 to a Python scalar
+2024-08-20 02:29:58,566 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 02:32:04,965 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 02:32:05,055 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 02:32:05,056 - ModelEvaluationLogger - ERROR - Error during model evaluation: can only convert an array of size 1 to a Python scalar
+Traceback (most recent call last):
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 189, in evaluate_model
+    all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\core\base.py", line 418, in item
+    raise ValueError("can only convert an array of size 1 to a Python scalar")
+ValueError: can only convert an array of size 1 to a Python scalar
+2024-08-20 13:18:36,334 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 13:22:41,563 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 13:22:41,654 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 13:22:41,654 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-20 13:29:58,131 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 13:32:33,961 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 13:32:34,043 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 13:32:34,044 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-20 13:51:14,612 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 13:54:38,856 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 13:54:38,947 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 13:54:38,947 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-20 14:09:41,395 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 14:12:49,671 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 14:12:49,766 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 14:12:49,767 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-20 14:15:46,614 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-20 14:17:17,417 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-20 14:17:17,513 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-20 14:17:17,514 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.

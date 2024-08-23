@@ -68,14 +68,15 @@ def No_external_load_dataset(path_to_csv):
 def with_external_load_dataset(path_to_csv, selected_features=None):
     df_earnings_ = pd.read_csv(path_to_csv, index_col=0, parse_dates=True)
     df_earnings_['feature_value'] = df_earnings_['feature_value'].replace(0, np.nan)
-    
+    columns_to_fill = df_earnings_.columns.difference(['feature_value'])
+    df_earnings_[columns_to_fill] = df_earnings_[columns_to_fill].fillna(0)
     convertcolumns_tofloat(df_earnings_)
 
 
     # Split the DataFrame into train and test sets
-    earnings_train_df = df_earnings_[df_earnings_. index <= '2022-06']
-    earnings_val_df = df_earnings_[df_earnings_.index <= '2022-12']
-    earnings_test_df = df_earnings_[df_earnings_.index < '2023-12']
+    earnings_train_df = df_earnings_[df_earnings_. index <= '2023-08'] # original '2022-06'
+    earnings_val_df = df_earnings_[df_earnings_.index <= '2023-11'] # '2022-12'
+    earnings_test_df = df_earnings_[df_earnings_.index < '2024-12'] # '2023-12' 
     
     # Create the Pandas
     

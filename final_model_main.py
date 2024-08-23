@@ -37,10 +37,10 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
     for dataset_name, path_to_csv, cl in tqdm(datasets, desc=f"Processing datasets"):
         best_score = float('inf')
         print(f'Processing {dataset_name} with {cl} context_length factor')
-        for i in range(5):
+        for i in range(1):
             for model_type in ['fine_tuned']:
                 result = evaluate_model(model_name, dataset_name, path_to_csv, model_type,
-                                        prediction_length=11, 
+                                        prediction_length=12, # orignal 11
                                         with_external=True, context_length_factor=cl,
                                         selected_features=final_selected_features)
 
@@ -70,6 +70,11 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
 
                 # Save results to CSV
                 results_df.to_csv(os.path.join(plots_dir, 'final_evaluation_results.csv'), index=False)
+                predictions_df = pd.DataFrame({
+                    'date': pd.date_range(start='2024-01-01', periods=12, freq='M'),
+                    'forecast': result.forecasts
+                })
+                predictions_df.to_csv(os.path.join(plots_dir, f'{dataset_name}_2024_predictions.csv'), index=False)
 
 if __name__ == "__main__":
     # Example parameters (you may customize these)
@@ -77,12 +82,13 @@ if __name__ == "__main__":
     remaining_feature_groups_idxs = [2, 4, 5, 6, 8, 9, 10]
     feature_prefixes = ['covid', 'indeed', 'inf_VALUE_Bank rate', 'inf_VALUE_Target rate',
                         'cpi_VALUE', 'gdp_VALUE', 'bus', 'job', 'ear', 'emp', 'hou']
-    plots_dir = "Final_run-EEHJ-04-13"
+    plots_dir = "Final_run-J-08-20"
     model_name = 'lag-llama'
-    datasets = [('emp', 'datasets\emp_melt_complete_data.csv', 6), 
-                ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
-                ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
-                ('job', 'datasets\job_melt_complete_data.csv', 5.2)]
+    datasets = [
+        # ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
+        #         ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
+        #         ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
+                ('job', 'datasets\job_melt_complete_data_2024.csv', 5.2)]
 
     # Call the main function
     final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, datasets)

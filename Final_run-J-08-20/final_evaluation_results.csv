@@ -1,0 +1,2 @@
+Dataset,context_factor,Model Type,Overall MAPE,Overall MASE,All Industries MAPE
+job,5.2,fine_tuned,0.26271906830531694,1.9116630498910365,0.24428306023279825
