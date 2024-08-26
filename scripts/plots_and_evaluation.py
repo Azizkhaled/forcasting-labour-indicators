@@ -188,6 +188,8 @@ def evaluate_model(model_name, dataset_name, path_to_csv, model_type, batch_size
             column = dataset_name[:3] + '_VALUE_' + 'Total, all industries' + '_Job vacancies' if with_external else 'Total, all industries' #original 
             column_2024 = 'Total, all industries'
             all_industries_mape = ts_metrics[ts_metrics['item_id'] == column_2024]['MAPE'].item()
+        elif dataset_name == 'emp_h':
+            all_industries_mape = ts_metrics['MAPE'].item()
         else:
             column = dataset_name[:3] + '_VALUE_' + 'Industrial aggregate excluding unclassified businesses [11-91N]' if with_external else 'Industrial aggregate excluding unclassified businesses [11-91N]'
             all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()

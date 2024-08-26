@@ -1,10 +1,12 @@
 import pickle
 import pandas as pd
 import os
+from datetime import datetime
 from tqdm import tqdm
 from scripts.plots_and_evaluation import evaluate_model, plots_and_evaluation
+from scripts.data_processing import data_creation
 
-def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, datasets):
+def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, datasets):
     """
     Main function to evaluate models with selected features and save the results.
 
@@ -17,6 +19,10 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
     - datasets: List of tuples where each tuple contains:
         (dataset_name, path_to_csv, context_length_factor).
     """
+    # Create the dataset
+    if dataset_creation:
+        data_creation(time_steps = 0)
+
     # Load the dataset
     df = pd.read_csv(df_path)
 
@@ -70,11 +76,11 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
 
                 # Save results to CSV
                 results_df.to_csv(os.path.join(plots_dir, 'final_evaluation_results.csv'), index=False)
-                predictions_df = pd.DataFrame({
-                    'date': pd.date_range(start='2024-01-01', periods=12, freq='M'),
-                    'forecast': result.forecasts
-                })
-                predictions_df.to_csv(os.path.join(plots_dir, f'{dataset_name}_2024_predictions.csv'), index=False)
+                # predictions_df = pd.DataFrame({
+                #     'date': pd.date_range(start='2023-06-01', periods=12, freq='M'),
+                #     'forecast': result.forecasts
+                # })-
+                # predictions_df.to_csv(os.path.join(plots_dir, f'{dataset_name}_2024_predictions.csv'), index=False)
 
 if __name__ == "__main__":
     # Example parameters (you may customize these)
@@ -82,14 +88,19 @@ if __name__ == "__main__":
     remaining_feature_groups_idxs = [2, 4, 5, 6, 8, 9, 10]
     feature_prefixes = ['covid', 'indeed', 'inf_VALUE_Bank rate', 'inf_VALUE_Target rate',
                         'cpi_VALUE', 'gdp_VALUE', 'bus', 'job', 'ear', 'emp', 'hou']
-    plots_dir = "Final_run-J-08-20"
+    dataset_creation = True
+    datetime_stamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
+    plots_dir = f"run-{datetime_stamp}"
     model_name = 'lag-llama'
     datasets = [
         # ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
         #         ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
         #         ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
-                ('job', 'datasets\job_melt_complete_data_2024.csv', 5.2)]
+                # ('job', 'datasets\job_melt_complete_data_2024.csv', 5.2)
+                ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
+                ]
 
     # Call the main function
-    final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, datasets)
+    final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, datasets)
+    print(f"this run start on {datetime_stamp} and ended on {datetime.now()}")
 

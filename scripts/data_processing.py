@@ -108,18 +108,16 @@ def with_external_load_dataset(path_to_csv, selected_features=None):
 # value_variables: self explantory
 def time_series_conversion(file_path,var_name,date_variable,category_variables,values_variables,time_steps=20):
 
-    print(file_path)
-
     #file input 
-    if file_path == 'Business_Outlook_Survey-ed-2023-10-01.csv':
-        df = pd.read_csv(file_path,skiprows=57)
+    if file_path == 'Business_Outlook_Survey-ed-2024-04-01.csv':
+        df = pd.read_csv('datasets/'+ file_path,skiprows=57)
     else:
-        df = pd.read_csv(file_path)
+        df = pd.read_csv('datasets/'+file_path)
 
     #specific instructions for certain files
-    if file_path == 'Employment_ByIndustry.csv':
+    if file_path == 'Employment_ByIndustry_2024.csv':
         df = df[df['GEO']=='Canada']
-    elif file_path == 'Business_Outlook_Survey-ed-2023-10-01.csv':
+    elif file_path == 'Business_Outlook_Survey-ed-2024-04-01.csv':
         df[date_variable[0]] = df[date_variable[0]].apply(convert_to_date)
         df = df[df[date_variable[0]]>= '2001-01-01']
         df[date_variable[0]] = pd.to_datetime(df[date_variable[0]])
@@ -128,13 +126,12 @@ def time_series_conversion(file_path,var_name,date_variable,category_variables,v
         df.reset_index(inplace=True)
     elif file_path == '36100434.csv':
         df[date_variable[0]] = pd.to_datetime(df[date_variable[0]], format='%Y-%m').dt.strftime('%Y-%m-%d')
-        df = df[(df['North American Industry Classification System (NAICS)'] == 'All industries [T001]') & 
-                (df['Seasonal adjustment'] == 'Seasonally adjusted at annual rates') &
+        df = df[(df['Seasonal adjustment'] == 'Seasonally adjusted at annual rates') &
                 (df['Prices'] == '2017 constant prices') &
                 (df[date_variable[0]]>= '2001-01-01')]
     elif file_path == '18100004.csv':
         df[date_variable[0]] = pd.to_datetime(df[date_variable[0]], format='%Y-%m').dt.strftime('%Y-%m-%d')
-        df = df[(df['Products and product groups'] == 'All-items') & 
+        df = df[(df['Products and product groups'] == 'All-items,') & 
                 (df['GEO'] == 'Canada') &
                 (df[date_variable[0]]>= '2001-01-01')]
     elif file_path == '10100139.csv':
@@ -154,11 +151,9 @@ def time_series_conversion(file_path,var_name,date_variable,category_variables,v
         df.reset_index(drop=True, inplace=True)
         df['date'] = df['date'].dt.to_period('M').dt.to_timestamp()
         df[date_variable[0]] = df[date_variable[0]].dt.strftime('%Y-%m-%d')
-    elif file_path == 'Hiring_Lab_full_country_data_to_2024-03-08.csv':
-        df = df[(df['jobcountry']=='Canada') &
-                (df['Postings Type']=='Overall Postings')&
-                (df['Index Type']=='Indeed Job Postings Index, Feb 01 2020 = 100')]
-        df[date_variable[0]] = pd.to_datetime(df['Date'])
+    elif file_path == 'job-postings-sector-index.csv':
+        df = df[(df['countryName']=='Canada')]
+        df[date_variable[0]] = pd.to_datetime(df[date_variable[0]], format='%Y-%m-%d')
         df = df[df[date_variable[0]].dt.is_month_start]
         df[date_variable[0]] = df[date_variable[0]].dt.strftime('%Y-%m-%d')
     elif file_path == '17100009.csv':
@@ -167,6 +162,16 @@ def time_series_conversion(file_path,var_name,date_variable,category_variables,v
         df[date_variable[0]] = pd.to_datetime(df[date_variable[0]])
         df = df.set_index(date_variable[0])
         df = df.shift(1, freq='D').resample('MS').bfill()
+        df.reset_index(inplace=True)
+    elif file_path == '17100005.csv':
+        df[date_variable[0]] = pd.to_datetime(df[date_variable[0]], format='%Y').dt.strftime('%Y-%m-%d')
+        df = df[(df[date_variable[0]]>= '2001-01-01')&(df['GEO'] == 'Canada')]
+        df = df[df[category_variables[0]].isin(['0 to 4 years','5 to 9 years','10 to 14 years','15 to 19 years','20 to 24 years','25 to 29 years','30 to 34 years',
+                                              '35 to 39 years','40 to 44 years','45 to 49 years','50 to 54 years','55 to 59 years','60 to 64 years','65 to 69 years',
+                                              '70 to 74 years','75 to 79 years','80 to 84 years','85 to 89 years','90 to 94 years','95 to 99 years'])]
+        df[date_variable[0]] = pd.to_datetime(df[date_variable[0]])
+        df = df[df[date_variable[0]].dt.is_month_start]
+        df = df.set_index(date_variable[0])
         df.reset_index(inplace=True)
     
     #filter on pivot variables and then pivot dataframe accordingly
@@ -189,6 +194,17 @@ def time_series_conversion(file_path,var_name,date_variable,category_variables,v
     #add id to columns so that they don't overlap with other files
     df.columns = var_name + df.columns
 
+    if file_path == '17100005.csv':
+        df.index = pd.to_datetime(df.index)
+        monthly_dates = pd.date_range(start=df.index.min(), end=df.index.max(), freq='MS')
+        df_expanded = df.reindex(monthly_dates, method='ffill')
+        df_expanded.index.name = 'REF_DATE'
+        df_expanded.reset_index(inplace=True)
+        df_expanded['REF_DATE'] = df_expanded['REF_DATE'].dt.strftime('%Y-%m-%d')
+        df_expanded.set_index('REF_DATE', inplace=True)
+        df = df_expanded
+        return df
+    
     return df
 
 # Define a function to extract timesteps and handle columns without timesteps
@@ -207,30 +223,32 @@ def extract_timestep(column_name):
 def data_creation(time_steps):
 
     #base data
-    df_job = time_series_conversion('JobVacancies_ByIndustry.csv','job_',['REF_DATE'],['North American Industry Classification System (NAICS)','Statistics'],['VALUE'],time_steps)
-    df_ear = time_series_conversion('Earnings_ByIndustry.csv','ear_',['REF_DATE'],['North American Industry Classification System (NAICS)'],['VALUE'],time_steps)
-    df_emp = time_series_conversion('Employment_ByIndustry.csv','emp_',['REF_DATE'],['North American Industry Classification System (NAICS)'],['VALUE'],time_steps)
-    df_hou = time_series_conversion('Hours_ByIndustry.csv','hou_',['REF_DATE'],['North American Industry Classification System (NAICS)'],['VALUE',],time_steps)
-    df_bus = time_series_conversion('Business_Outlook_Survey-ed-2023-10-01.csv','bus_',['date'],[],['EMPLOY','COSTS','OUTPUTS'],time_steps)
-    df_gdp = time_series_conversion('36100434.csv','gdp_',['REF_DATE'],[],['VALUE'],time_steps)
+    df_job = time_series_conversion('JobVacancies_ByIndustry_2024.csv','job_',['REF_DATE'],['North American Industry Classification System (NAICS)','Statistics'],['VALUE'],time_steps)
+    df_ear = time_series_conversion('Earnings_ByIndustry_2024.csv','ear_',['REF_DATE'],['North American Industry Classification System (NAICS)'],['VALUE'],time_steps)
+    df_emp = time_series_conversion('Employment_ByIndustry_2024.csv','emp_',['REF_DATE'],['North American Industry Classification System (NAICS)'],['VALUE'],time_steps)
+    df_hou = time_series_conversion('Hours_ByIndustry_2024.csv','hou_',['REF_DATE'],['North American Industry Classification System (NAICS)'],['VALUE',],time_steps)
+    df_bus = time_series_conversion('Business_Outlook_Survey-ed-2024-04-01.csv','bus_',['date'],[],['EMPLOY','COSTS','OUTPUTS'],time_steps)
+    df_gdp = time_series_conversion('36100434.csv','gdp_',['REF_DATE'],['North American Industry Classification System (NAICS)'],['VALUE'],time_steps)
     df_cpi = time_series_conversion('18100004.csv','cpi_',['REF_DATE'],[],['VALUE'],time_steps)
     df_inf = time_series_conversion('10100139.csv','inf_',['REF_DATE'],['Financial market statistics'],['VALUE'],time_steps)
     df_pop = time_series_conversion('17100009.csv','pop_',['REF_DATE'],['GEO'],['VALUE'],time_steps)
     df_covid = time_series_conversion('covid19-download.csv','covid_',['date'],['prname'],['numtotal_last7'],time_steps)
-    df_indeed = time_series_conversion('Hiring_Lab_full_country_data_to_2024-03-08.csv','indeed_',['Date'],['Sector'],['Non-seasonally adjusted percentage'],time_steps)
+    df_indeed = time_series_conversion('job-postings-sector-index.csv','indeed_',['dateString'],['sectorName'],['value'],time_steps)
+    df_age_demo = time_series_conversion('17100005.csv','age_',['REF_DATE'],['Age group','Gender'],['VALUE'],time_steps) # new for health
     output_var_size = sum([len(dfs.columns) for dfs in [df_job, df_ear, df_emp, df_hou]])/(time_steps+1)
-    input_var_size = sum([len(dfs.columns) for dfs in [df_pop,df_indeed,df_covid,df_inf,df_cpi,df_gdp,df_bus,df_job, df_ear, df_emp, df_hou]])/(time_steps+1)
+    input_var_size = sum([len(dfs.columns) for dfs in [df_age_demo,df_pop,df_indeed,df_covid,df_inf,df_cpi,df_gdp,df_bus,df_job, df_ear, df_emp, df_hou]])/(time_steps+1)
     df = df_pop
-    for df1 in [df_covid,df_indeed,df_inf,df_cpi,df_gdp,df_bus,df_job,df_ear,df_emp,df_hou]:
+    for df1 in [df_age_demo,df_covid,df_indeed,df_inf,df_cpi,df_gdp,df_bus,df_job,df_ear,df_emp,df_hou]:
         df = pd.merge(df,df1,how = 'outer',left_index=True,right_index=True)
-
     # Sort the DataFrame's columns by the extracted timestep
     sorted_columns = sorted(df.columns, key=extract_timestep,reverse=True)
     df = df[sorted_columns]
-    df = df[(df.index >= '2000-02-01') & (df.index <= '2023-12-01')]
+    df = df[(df.index >= '2000-02-01') & (df.index <= '2024-05-01')]
     df.fillna(0,inplace=True)
-    
-    return df_job,df_ear,df_emp,df_hou,df,input_var_size,output_var_size
+
+    #create final data files
+    convert_to_csv(df,input_var_size)
+
 
 def convert_to_csv(df,input_var_size):
     labour_ind = ['job_','ear_','emp_','hou_']
@@ -249,4 +267,9 @@ def convert_to_csv(df,input_var_size):
         melt_df = melt_df.set_index('index')
         melt_df.head()
         df_gluton = pd.merge(melt_df,df,how = 'left',left_index=True,right_index=True)
-        df_gluton.to_csv(f'{ind}melt_complete_data.csv')
+        df_gluton.to_csv('datasets/'+f'{ind}melt_complete_data.csv')
+
+    #generate healthcare industry specific dataset
+    df = pd.read_csv('datasets/'+'emp_melt_complete_data.csv',index_col=0)
+    df = df[df['feature_name']=='emp_VALUE_Health care and social assistance [62]']
+    df.to_csv('datasets/'+'emp_health_melt_complete_data.csv')
