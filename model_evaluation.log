@@ -26,3 +26,59 @@
 2024-08-27 17:27:54,255 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
 2024-08-27 17:27:54,346 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
 2024-08-27 17:27:54,347 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 18:18:15,908 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:17,064 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:17,076 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:17,076 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:17,077 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:17,507 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:17,518 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:17,518 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:17,520 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:17,990 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:18,000 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:18,001 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:18,002 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:18,484 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:18,495 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:18,495 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:18,496 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:18,999 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:19,011 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:19,012 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:19,013 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:19,434 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:19,447 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:19,447 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:19,449 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:19,866 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:19,878 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:19,878 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:19,880 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:20,331 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:20,341 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:20,341 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:20,343 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:20,757 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:20,767 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:20,767 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:20,769 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:21,186 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:21,198 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:21,198 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:21,200 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:21,695 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:21,705 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:21,705 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:21,706 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:22,163 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:22,175 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:22,175 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:22,177 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:18:22,622 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 18:18:22,634 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:18:22,634 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
+2024-08-27 18:18:22,638 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
+2024-08-27 18:21:41,420 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-27 18:21:41,431 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 18:21:41,432 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
