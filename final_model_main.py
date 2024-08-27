@@ -57,7 +57,7 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
         best_score = float('inf')
         print(f'Processing {dataset_name} with {cl} context_length factor')
         for i in range(1):
-            for model_type in ['fine_tuned']:
+            for model_type in ['fine_tuned', 'baseline']:
                 result = evaluate_model(model_name, dataset_name, path_to_csv, model_type,
                                         prediction_length=12, # orignal 11
                                         with_external=True, context_length_factor=cl,
