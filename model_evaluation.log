@@ -1,177 +1,28 @@
-2024-08-15 15:28:22,760 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-15 15:40:38,239 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-15 15:51:19,025 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-15 15:51:19,148 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-15 15:51:19,150 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
-2024-08-15 15:51:22,041 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-15 15:57:25,095 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-15 15:57:25,377 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-15 15:57:25,379 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
-2024-08-15 15:57:30,807 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-15 16:04:24,395 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-15 16:04:24,512 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-15 16:04:24,514 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
-2024-08-15 16:04:27,457 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-15 16:10:44,131 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-15 16:10:44,361 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-15 16:10:44,362 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
-2024-08-15 16:10:49,289 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-20 01:30:40,660 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 01:34:48,201 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 01:36:12,339 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 01:36:12,435 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 01:36:12,437 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-20 01:45:02,956 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 01:46:48,291 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 01:46:48,374 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 01:46:48,375 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-20 01:53:09,936 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 01:56:29,634 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 01:56:29,719 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 01:56:29,720 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-20 02:22:58,535 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 02:25:44,411 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 02:25:44,503 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 02:25:44,504 - ModelEvaluationLogger - ERROR - Error during model evaluation: can only convert an array of size 1 to a Python scalar
-Traceback (most recent call last):
-  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 189, in evaluate_model
-    all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()
-  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\core\base.py", line 418, in item
-    raise ValueError("can only convert an array of size 1 to a Python scalar")
-ValueError: can only convert an array of size 1 to a Python scalar
-2024-08-20 02:29:58,566 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 02:32:04,965 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 02:32:05,055 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 02:32:05,056 - ModelEvaluationLogger - ERROR - Error during model evaluation: can only convert an array of size 1 to a Python scalar
-Traceback (most recent call last):
-  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 189, in evaluate_model
-    all_industries_mape = ts_metrics[ts_metrics['item_id'] == column]['MAPE'].item()
-  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\core\base.py", line 418, in item
-    raise ValueError("can only convert an array of size 1 to a Python scalar")
-ValueError: can only convert an array of size 1 to a Python scalar
-2024-08-20 13:18:36,334 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 13:22:41,563 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 13:22:41,654 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 13:22:41,654 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-20 13:29:58,131 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 13:32:33,961 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 13:32:34,043 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 13:32:34,044 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-20 13:51:14,612 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 13:54:38,856 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 13:54:38,947 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 13:54:38,947 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-20 14:09:41,395 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 14:12:49,671 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 14:12:49,766 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 14:12:49,767 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-20 14:15:46,614 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
-2024-08-20 14:17:17,417 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-20 14:17:17,513 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-20 14:17:17,514 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
-2024-08-26 18:02:45,011 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
-2024-08-26 18:06:02,397 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-26 18:06:02,409 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-26 18:06:02,409 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
-2024-08-26 19:56:05,965 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp_h
-2024-08-26 19:58:34,030 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-26 19:58:34,042 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-26 19:58:34,042 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
-2024-08-26 20:00:53,364 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-26 20:05:33,673 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-26 20:05:33,767 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-26 20:05:33,768 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
-2024-08-26 20:05:35,809 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
-2024-08-26 20:05:37,993 - ModelEvaluationLogger - ERROR - Error during model evaluation: "['ear_VALUE_Accommodation and food services [72]', 'ear_VALUE_Administrative and support, waste management and remediation services [56]', 'ear_VALUE_Arts, entertainment and recreation [71]', 'ear_VALUE_Construction [23]', 'ear_VALUE_Educational services [61,611]', 'ear_VALUE_Finance and insurance [52]', 'ear_VALUE_Forestry, logging and support [11N]', 'ear_VALUE_Goods producing industries [11-33N]', 'ear_VALUE_Health care and social assistance [62]', 'ear_VALUE_Industrial aggregate excluding unclassified businesses [11-91N]', 'ear_VALUE_Information and cultural industries [51]', 'ear_VALUE_Management of companies and enterprises [55,551,5511]', 'ear_VALUE_Manufacturing [31-33]', 'ear_VALUE_Mining, quarrying, and oil and gas extraction [21]', 'ear_VALUE_Other services (except public administration) [81]', 'ear_VALUE_Professional, scientific and technical services [54,541]', 'ear_VALUE_Public administration [91]', 'ear_VALUE_Real estate and rental and leasing [53]', 'ear_VALUE_Service producing industries [41-91N]', 'ear_VALUE_Trade [41-45N]', 'ear_VALUE_Transportation and warehousing [48-49]', 'ear_VALUE_Utilities [22,221]'] not in index"
-Traceback (most recent call last):
-  File "C:\Users\lukes\Desktop\Nowcasting Final\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 164, in evaluate_model
-    forecasts, ts = llama_models_obj.fine_tuned_model(max_epochs=max_epochs, initial_weights_path=initial_weights_path)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\Desktop\Nowcasting Final\forcasting-labour-indicators\models\llama.py", line 144, in fine_tuned_model
-    earnings_predictor = estimator.train(training_data=self.train_earnings_dataset, validation_data= self.val_earnings_dataset, cache_data=True, shuffle_buffer_length=1000)
-                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\torch\model\estimator.py", line 246, in train
-    return self.train_model(
-           ^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\torch\model\estimator.py", line 209, in train_model
-    trainer.fit(
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\trainer\trainer.py", line 544, in fit
-    call._call_and_handle_interrupt(
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\trainer\call.py", line 44, in _call_and_handle_interrupt
-    return trainer_fn(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\trainer\trainer.py", line 580, in _fit_impl
-    self._run(model, ckpt_path=ckpt_path)
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\trainer\trainer.py", line 989, in _run
-    results = self._run_stage()
-              ^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\trainer\trainer.py", line 1033, in _run_stage
-    self._run_sanity_check()
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\trainer\trainer.py", line 1062, in _run_sanity_check
-    val_loop.run()
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\loops\utilities.py", line 182, in _decorator
-    return loop_run(self, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\loops\evaluation_loop.py", line 127, in run
-    batch, batch_idx, dataloader_idx = next(data_fetcher)
-                                       ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\loops\fetchers.py", line 127, in __next__
-    batch = super().__next__()
-            ^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\loops\fetchers.py", line 56, in __next__
-    batch = next(self.iterator)
-            ^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\utilities\combined_loader.py", line 326, in __next__
-    out = next(self._iterator)
-          ^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\lightning\pytorch\utilities\combined_loader.py", line 132, in __next__
-    out = next(self.iterators[0])
-          ^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\itertools.py", line 420, in __iter__
-    yield from itertools.islice(self.iterable, self.length)
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 111, in __iter__
-    yield from self.transformation(
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 132, in __call__
-    for data_entry in data_it:
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\dataset\loader.py", line 55, in __call__
-    for batch in data:
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\dataset\loader.py", line 50, in __call__
-    yield from batcher(data, self.batch_size)
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\itertools.py", line 131, in get_batch
-    return list(itertools.islice(it, batch_size))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 132, in __call__
-    for data_entry in data_it:
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 111, in __iter__
-    yield from self.transformation(
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 186, in __call__
-    for data_entry in data_it:
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\itertools.py", line 331, in __iter__
-    for element in self.provider:
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 111, in __iter__
-    yield from self.transformation(
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 132, in __call__
-    for data_entry in data_it:
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\transform\_base.py", line 132, in __call__
-    for data_entry in data_it:
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\dataset\pandas.py", line 217, in __iter__
-    yield from self._data_entries
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\gluonts\dataset\pandas.py", line 205, in _pair_to_dataentry
-    entry["feat_dynamic_real"] = df[self.feat_dynamic_real].values.T
-                                 ~~^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 3464, in __getitem__
-    indexer = self.loc._get_listlike_indexer(key, axis=1)[1]
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexing.py", line 1314, in _get_listlike_indexer
-    self._validate_read_indexer(keyarr, indexer, axis)
-  File "C:\Users\lukes\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\indexing.py", line 1377, in _validate_read_indexer
-    raise KeyError(f"{not_found} not in index")
-KeyError: "['ear_VALUE_Accommodation and food services [72]', 'ear_VALUE_Administrative and support, waste management and remediation services [56]', 'ear_VALUE_Arts, entertainment and recreation [71]', 'ear_VALUE_Construction [23]', 'ear_VALUE_Educational services [61,611]', 'ear_VALUE_Finance and insurance [52]', 'ear_VALUE_Forestry, logging and support [11N]', 'ear_VALUE_Goods producing industries [11-33N]', 'ear_VALUE_Health care and social assistance [62]', 'ear_VALUE_Industrial aggregate excluding unclassified businesses [11-91N]', 'ear_VALUE_Information and cultural industries [51]', 'ear_VALUE_Management of companies and enterprises [55,551,5511]', 'ear_VALUE_Manufacturing [31-33]', 'ear_VALUE_Mining, quarrying, and oil and gas extraction [21]', 'ear_VALUE_Other services (except public administration) [81]', 'ear_VALUE_Professional, scientific and technical services [54,541]', 'ear_VALUE_Public administration [91]', 'ear_VALUE_Real estate and rental and leasing [53]', 'ear_VALUE_Service producing industries [41-91N]', 'ear_VALUE_Trade [41-45N]', 'ear_VALUE_Transportation and warehousing [48-49]', 'ear_VALUE_Utilities [22,221]'] not in index"
-2024-08-26 20:44:29,743 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
-2024-08-26 20:46:34,267 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-26 20:46:34,353 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-26 20:46:34,353 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on earn.
-2024-08-26 20:48:53,673 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
-2024-08-26 20:53:36,241 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
-2024-08-26 20:53:36,334 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
-2024-08-26 20:53:36,334 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 17:22:52,883 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 17:22:56,616 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 17:22:56,708 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 17:22:56,709 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 17:22:56,710 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 17:23:00,392 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 17:23:00,488 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 17:23:00,489 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 17:23:00,490 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 17:23:04,211 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 17:23:04,306 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 17:23:04,307 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 17:23:04,309 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 17:23:08,017 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 17:23:08,108 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 17:23:08,109 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 17:23:08,110 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 17:23:11,797 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 17:23:11,891 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 17:23:11,892 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 17:23:11,894 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 17:23:15,582 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-27 17:23:15,676 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 17:23:15,677 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-27 17:23:15,681 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 17:27:54,255 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-27 17:27:54,346 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-27 17:27:54,347 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.

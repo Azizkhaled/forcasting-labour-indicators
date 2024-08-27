@@ -5,8 +5,10 @@ from datetime import datetime
 from tqdm import tqdm
 from scripts.plots_and_evaluation import evaluate_model, plots_and_evaluation
 from scripts.data_processing import data_creation
+from scripts.backward_selection import backward_selection
+from scripts.forward_selection import forward_selection
 
-def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, datasets):
+def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation,feat_backward_selection, feat_forward_selection, datasets):
     """
     Main function to evaluate models with selected features and save the results.
 
@@ -26,12 +28,23 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
     # Load the dataset
     df = pd.read_csv(df_path)
 
+    #run backwards selection
+    if feat_backward_selection:
+        selected_features = backward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
+        feature_prefixes = {item.split('_', 1)[0] for item in selected_features}
+    elif feat_forward_selection:
+        selected_features = forward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
+        feature_prefixes = {item.split('_', 1)[0] for item in selected_features}
+    
     # Compile final selected features based on remaining indices
     feature_groups = [
         [col for col in df.columns if col.startswith(prefix)] 
         for prefix in feature_prefixes
     ]
-    final_selected_features = [feature for idx in remaining_feature_groups_idxs for feature in feature_groups[idx]]
+    # final_selected_features = [feature for idx in remaining_feature_groups_idxs for feature in feature_groups[idx]]
+
+    final_selected_features = [feature for sublist in feature_groups for feature in sublist]
+    # final_selected_features =  [col for col in df.columns if col.startswith(feature_prefixes)]
 
     # Ensure the results directory exists
     os.makedirs(plots_dir, exist_ok=True)
@@ -76,6 +89,7 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
 
                 # Save results to CSV
                 results_df.to_csv(os.path.join(plots_dir, 'final_evaluation_results.csv'), index=False)
+                print(feature_prefixes)
                 # predictions_df = pd.DataFrame({
                 #     'date': pd.date_range(start='2023-06-01', periods=12, freq='M'),
                 #     'forecast': result.forecasts
@@ -85,10 +99,12 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
 if __name__ == "__main__":
     # Example parameters (you may customize these)
     df_path = 'datasets\emp_melt_complete_data.csv'
-    remaining_feature_groups_idxs = [2, 4, 5, 6, 8, 9, 10]
-    feature_prefixes = ['covid', 'indeed', 'inf_VALUE_Bank rate', 'inf_VALUE_Target rate',
-                        'cpi_VALUE', 'gdp_VALUE', 'bus', 'job', 'ear', 'emp', 'hou']
+    remaining_feature_groups_idxs = [1,2,3, 4, 5, 6, 8, 9, 10,11,12]
+    feature_prefixes = ['age_', 'pop_', 'covid_', 'indeed_', 'inf_',
+                        'cpi_', 'gdp_', 'bus_', 'job_', 'ear_', 'emp_', 'hou_']
     dataset_creation = True
+    feat_backward_selection = False
+    feat_forward_selection= True
     datetime_stamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
     plots_dir = f"run-{datetime_stamp}"
     model_name = 'lag-llama'
@@ -101,6 +117,6 @@ if __name__ == "__main__":
                 ]
 
     # Call the main function
-    final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, datasets)
+    final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, feat_backward_selection, feat_forward_selection, datasets)
     print(f"this run start on {datetime_stamp} and ended on {datetime.now()}")
 

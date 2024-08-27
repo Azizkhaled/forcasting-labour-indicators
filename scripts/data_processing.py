@@ -244,7 +244,7 @@ def data_creation(time_steps):
     sorted_columns = sorted(df.columns, key=extract_timestep,reverse=True)
     df = df[sorted_columns]
     df = df[(df.index >= '2001-01-01') & (df.index <= '2024-05-01')]
-    df.fillna(0,inplace=True)
+    # df.fillna(0,inplace=True)
 
     #create final data files
     convert_to_csv(df,input_var_size)
@@ -255,14 +255,16 @@ def convert_to_csv(df,input_var_size):
     for ind in labour_ind:
         temp_df = df.copy()
         if ind == 'emp_health_':
-            df_col = [col for col in temp_df.columns if col.startswith('emp_')]
+            df_col = [col for col in temp_df.columns if col.startswith('emp_VALUE_Health')]
             all_df_col = [col for col in temp_df.columns 
-                        if any(col.startswith(all_ind) for all_ind in labour_ind if all_ind != 'emp_')]
+                        if any(col.startswith(all_ind) for all_ind in labour_ind)]
+            all_df_col = [col for col in all_df_col if col not in df_col]
         else:
             df_col = [col for col in temp_df.columns if col.startswith(ind)]
             all_df_col = [col for col in temp_df.columns 
                         if any(col.startswith(all_ind) for all_ind in labour_ind if all_ind != ind)]
         temp_df[all_df_col] = temp_df[all_df_col].shift(3)
+        temp_df = temp_df.ffill()
         temp_df.fillna(0,inplace=True)
         melt_df = temp_df.iloc[:,-int(input_var_size):][df_col]
         melt_df = melt_df.reset_index()
@@ -271,9 +273,9 @@ def convert_to_csv(df,input_var_size):
         melt_df.head()
         df_gluton = pd.merge(melt_df,temp_df,how = 'left',left_index=True,right_index=True)
         print(df_gluton['feature_name'].unique())
+        df_gluton = df_gluton.drop(df_gluton['feature_name'].unique(),axis=1)
         if ind == 'emp_health_':
             df_gluton = df_gluton[df_gluton['feature_name']=='emp_VALUE_Health care and social assistance [62]']
-        df_gluton = df_gluton.drop(df_gluton['feature_name'].unique(),axis=1)
         if ind == 'job_':
             df_gluton = df_gluton[df_gluton.index >= '2015-07-01']
         else:
