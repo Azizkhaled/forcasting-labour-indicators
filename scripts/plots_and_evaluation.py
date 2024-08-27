@@ -61,6 +61,56 @@ class plots_and_evaluation:
         return agg_metrics, ts_metrics
     
 
+# class plots_and_evaluation_2:
+    
+#     def __init__(self, forecasts, tss, forecasts_2, tss_2, prediction_length=11, title='', plot_only=None):
+#         self.forecasts = forecasts
+#         self.tss = tss
+#         self.forecasts_2 = forecasts_2
+#         self.tss_2 = tss_2
+#         self.prediction_length = prediction_length
+#         self.title = title
+#         self.plot_only = plot_only
+    
+#     def plot_forcasts_all(self, Dataset_name,zoom_to_predicted=False, save_path=None):
+#         plt.figure(figsize=(10,7) if self.plot_only else (20, 27))
+#         date_formater = mdates.DateFormatter('%Y,%m')
+#         plt.rcParams.update({'font.size': 9})
+
+#         for idx, ((forecast, ts), (forecast_2, ts_2)) in enumerate(zip(zip(self.forecasts, self.tss), zip(self.forecasts_2, self.tss_2))):
+#             if self.plot_only:
+#                 ax = plt.subplot(1, 1, 1)
+#                 if self.plot_only in forecast.item_id:
+#                     zoom = -2 if zoom_to_predicted else 30
+#                     plt.plot(ts[zoom * self.prediction_length:].to_timestamp(), label=f"Target: {Dataset_name} - { self.plot_only}")
+#                     forecast.plot(ax=ax, color='green', name=f"Fine-Tuned", show_label=True)
+#                     # plt.plot(ts_2[zoom * self.prediction_length:].to_timestamp(), label="Target 2", color='orange')
+#                     forecast_2.plot(ax=ax, color='red', name="Baseline", show_label=True)
+#                     plt.xticks(rotation=60)
+#                     ax.xaxis.set_major_formatter(date_formater)
+#                     ax.set_title(self.title + ': ' + forecast.item_id)
+#                     ax.set_xlabel('Date', fontsize=12)  # Set x-axis label with a specific size
+#                     ax.set_ylabel('Value', fontsize=12)  # Set y-axis label with a specific size
+#                     ax.set_title(self.title + ': ' + forecast.item_id, fontsize=14)  # Set title with a specific size
+#                     ax.tick_params(axis='x', labelsize=10)  # Adjust x-axis tick label sizes
+#                     ax.tick_params(axis='y', labelsize=10)  # Adjust y-axis tick label sizes
+
+#             else:
+#                 ax = plt.subplot(6, 4, idx + 1)
+#                 plt.plot(ts[-4 * self.prediction_length:].to_timestamp(), label="Target", color='blue')
+#                 forecast.plot(ax=ax, color='green', name="Fine-Tuned", show_label=True)
+#                 # plt.plot(ts_2[-4 * self.prediction_length:].to_timestamp(), label="Target 2", color='orange')
+#                 forecast_2.plot(ax=ax, color='red', name="Baseline", show_label=True)
+#                 plt.xticks(rotation=60)
+#                 ax.xaxis.set_major_formatter(date_formater)
+#                 ax.set_title(forecast.item_id)
+
+#         plt.gcf().tight_layout()
+#         plt.legend()
+#         if save_path is not None:
+#             plt.savefig(save_path)
+#         else:
+#             plt.show()
 class plots_and_evaluation_2:
     
     def __init__(self, forecasts, tss, forecasts_2, tss_2, prediction_length=11, title='', plot_only=None):
@@ -72,7 +122,7 @@ class plots_and_evaluation_2:
         self.title = title
         self.plot_only = plot_only
     
-    def plot_forcasts_all(self, Dataset_name,zoom_to_predicted=False, save_path=None):
+    def plot_forcasts_all(self, Dataset_name, zoom_to_predicted=False, save_path=None):
         plt.figure(figsize=(10,7) if self.plot_only else (20, 27))
         date_formater = mdates.DateFormatter('%Y,%m')
         plt.rcParams.update({'font.size': 9})
@@ -81,25 +131,40 @@ class plots_and_evaluation_2:
             if self.plot_only:
                 ax = plt.subplot(1, 1, 1)
                 if self.plot_only in forecast.item_id:
-                    zoom = -5 if zoom_to_predicted else 20
-                    plt.plot(ts[zoom * self.prediction_length:].to_timestamp(), label=f"Target: {Dataset_name} - { self.plot_only}")
+                    # Conditional slicing based on zoom_to_predicted
+                    if zoom_to_predicted:
+                        # Zoom in to last 5 prediction intervals
+                        data_slice = slice(-2 * self.prediction_length, None)
+                    else:
+                        # Include all available data
+                        data_slice = slice(None)
+
+                    plt.plot(ts[data_slice].to_timestamp()[ts[data_slice].index <= '2023-12-01'], label=f"Target: {Dataset_name} - { self.plot_only}", color='blue')
+                    plt.plot(ts[data_slice].to_timestamp()[ts[data_slice].index >= '2023-12-01'], linestyle='dashed', color='blue')
+                    # plt.plot(ts[data_slice].to_timestamp(), label=f"Target: {Dataset_name} - { self.plot_only}")
                     forecast.plot(ax=ax, color='green', name=f"Fine-Tuned", show_label=True)
-                    # plt.plot(ts_2[zoom * self.prediction_length:].to_timestamp(), label="Target 2", color='orange')
                     forecast_2.plot(ax=ax, color='red', name="Baseline", show_label=True)
                     plt.xticks(rotation=60)
                     ax.xaxis.set_major_formatter(date_formater)
                     ax.set_title(self.title + ': ' + forecast.item_id)
-                    ax.set_xlabel('Date', fontsize=12)  # Set x-axis label with a specific size
-                    ax.set_ylabel('Value', fontsize=12)  # Set y-axis label with a specific size
-                    ax.set_title(self.title + ': ' + forecast.item_id, fontsize=14)  # Set title with a specific size
-                    ax.tick_params(axis='x', labelsize=10)  # Adjust x-axis tick label sizes
-                    ax.tick_params(axis='y', labelsize=10)  # Adjust y-axis tick label sizes
+                    ax.set_xlabel('Date', fontsize=12)
+                    ax.set_ylabel('Value', fontsize=12)
+                    ax.set_title(self.title + ': ' + forecast.item_id, fontsize=14)
+                    ax.tick_params(axis='x', labelsize=10)
+                    ax.tick_params(axis='y', labelsize=10)
 
             else:
                 ax = plt.subplot(6, 4, idx + 1)
-                plt.plot(ts[-4 * self.prediction_length:].to_timestamp(), label="Target", color='blue')
+                if zoom_to_predicted:
+                    # Zoom in to last 4 prediction intervals
+                    data_slice = slice(-4 * self.prediction_length, None)
+                else:
+                    # Include all available data
+                    data_slice = slice(None)
+
+                plt.plot(ts[data_slice].to_timestamp()[ts[data_slice].index < '2024-01-01'], label=f"Target: {Dataset_name} - { self.plot_only}", color='blue')
+                plt.plot(ts[data_slice].to_timestamp()[ts[data_slice].index >= '2024-01-01'], linestyle='dashed', color='blue',  label=f"2024 data")
                 forecast.plot(ax=ax, color='green', name="Fine-Tuned", show_label=True)
-                # plt.plot(ts_2[-4 * self.prediction_length:].to_timestamp(), label="Target 2", color='orange')
                 forecast_2.plot(ax=ax, color='red', name="Baseline", show_label=True)
                 plt.xticks(rotation=60)
                 ax.xaxis.set_major_formatter(date_formater)
