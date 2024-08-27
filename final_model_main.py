@@ -93,11 +93,11 @@ if __name__ == "__main__":
     plots_dir = f"run-{datetime_stamp}"
     model_name = 'lag-llama'
     datasets = [
-        # ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
-        #         ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
-        #         ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
-                # ('job', 'datasets\job_melt_complete_data_2024.csv', 5.2)
-                ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
+                ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
+                # ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
+                # ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
+                # ('job', 'datasets\job_melt_complete_data_2024.csv', 5.2),
+                # ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
                 ]
 
     # Call the main function

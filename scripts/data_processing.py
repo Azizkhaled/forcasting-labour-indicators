@@ -235,7 +235,7 @@ def data_creation(time_steps):
     df_covid = time_series_conversion('covid19-download.csv','covid_',['date'],['prname'],['numtotal_last7'],time_steps)
     df_indeed = time_series_conversion('job-postings-sector-index.csv','indeed_',['dateString'],['sectorName'],['value'],time_steps)
     df_age_demo = time_series_conversion('17100005.csv','age_',['REF_DATE'],['Age group','Gender'],['VALUE'],time_steps) # new for health
-    output_var_size = sum([len(dfs.columns) for dfs in [df_job, df_ear, df_emp, df_hou]])/(time_steps+1)
+    # output_var_size = sum([len(dfs.columns) for dfs in [df_job, df_ear, df_emp, df_hou]])/(time_steps+1)
     input_var_size = sum([len(dfs.columns) for dfs in [df_age_demo,df_pop,df_indeed,df_covid,df_inf,df_cpi,df_gdp,df_bus,df_job, df_ear, df_emp, df_hou]])/(time_steps+1)
     df = df_pop
     for df1 in [df_age_demo,df_covid,df_indeed,df_inf,df_cpi,df_gdp,df_bus,df_job,df_ear,df_emp,df_hou]:
@@ -243,7 +243,7 @@ def data_creation(time_steps):
     # Sort the DataFrame's columns by the extracted timestep
     sorted_columns = sorted(df.columns, key=extract_timestep,reverse=True)
     df = df[sorted_columns]
-    df = df[(df.index >= '2000-02-01') & (df.index <= '2024-05-01')]
+    df = df[(df.index >= '2001-01-01') & (df.index <= '2024-05-01')]
     df.fillna(0,inplace=True)
 
     #create final data files
@@ -251,25 +251,31 @@ def data_creation(time_steps):
 
 
 def convert_to_csv(df,input_var_size):
-    labour_ind = ['job_','ear_','emp_','hou_']
+    labour_ind = ['job_','ear_','emp_','hou_','emp_health_']
     for ind in labour_ind:
-        if ind == 'job_':
-            df_col = [col for col in df.columns if col.startswith(ind) and col.endswith('cies')]
-            other_col = [col for col in df.columns if not(col.startswith(ind)) or (col.startswith(ind) and not(col.endswith('cies')))]
+        temp_df = df.copy()
+        if ind == 'emp_health_':
+            df_col = [col for col in temp_df.columns if col.startswith('emp_')]
+            all_df_col = [col for col in temp_df.columns 
+                        if any(col.startswith(all_ind) for all_ind in labour_ind if all_ind != 'emp_')]
         else:
-            df_col = [col for col in df.columns if col.startswith(ind)]
-            other_col = [col for col in df.columns if not(col.startswith(ind))]
-        df[other_col] = df[other_col].shift(1)
-        df.fillna(0,inplace=True)
-        melt_df = df.iloc[:,-int(input_var_size):][df_col]
+            df_col = [col for col in temp_df.columns if col.startswith(ind)]
+            all_df_col = [col for col in temp_df.columns 
+                        if any(col.startswith(all_ind) for all_ind in labour_ind if all_ind != ind)]
+        temp_df[all_df_col] = temp_df[all_df_col].shift(3)
+        temp_df.fillna(0,inplace=True)
+        melt_df = temp_df.iloc[:,-int(input_var_size):][df_col]
         melt_df = melt_df.reset_index()
         melt_df = pd.melt(melt_df, id_vars=['index'], var_name='feature_name', value_name='feature_value')
         melt_df = melt_df.set_index('index')
         melt_df.head()
-        df_gluton = pd.merge(melt_df,df,how = 'left',left_index=True,right_index=True)
+        df_gluton = pd.merge(melt_df,temp_df,how = 'left',left_index=True,right_index=True)
+        print(df_gluton['feature_name'].unique())
+        if ind == 'emp_health_':
+            df_gluton = df_gluton[df_gluton['feature_name']=='emp_VALUE_Health care and social assistance [62]']
+        df_gluton = df_gluton.drop(df_gluton['feature_name'].unique(),axis=1)
+        if ind == 'job_':
+            df_gluton = df_gluton[df_gluton.index >= '2015-07-01']
+        else:
+            df_gluton = df_gluton[df_gluton.index >= '2001-04-01']
         df_gluton.to_csv('datasets/'+f'{ind}melt_complete_data.csv')
-
-    #generate healthcare industry specific dataset
-    df = pd.read_csv('datasets/'+'emp_melt_complete_data.csv',index_col=0)
-    df = df[df['feature_name']=='emp_VALUE_Health care and social assistance [62]']
-    df.to_csv('datasets/'+'emp_health_melt_complete_data.csv')
