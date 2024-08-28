@@ -75,3 +75,293 @@
 2024-08-27 19:03:50,410 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
 2024-08-27 19:03:50,412 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp_h.
 2024-08-27 19:20:16,654 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 19:29:03,995 - ModelEvaluationLogger - ERROR - Error during model evaluation: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+Traceback (most recent call last):
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 229, in evaluate_model
+    forecasts, ts = llama_models_obj.fine_tuned_model(max_epochs=max_epochs, initial_weights_path=initial_weights_path)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\models\llama.py", line 151, in fine_tuned_model
+    forecasts = list(tqdm(forecast_it, total=len(self.test_earnings_dataset), desc="Forecasting batches"))
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\tqdm\notebook.py", line 254, in __iter__
+    for obj in it:
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\tqdm\std.py", line 1178, in __iter__
+    for obj in iterable:
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\model\predictor.py", line 90, in predict
+    yield from self.forecast_generator(
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\model\forecast_generator.py", line 156, in __call__
+    outputs = predict_to_numpy(prediction_net, inputs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\functools.py", line 889, in wrapper
+    return dispatch(args[0].__class__)(*args, **kw)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\model\predictor.py", line 38, in _
+    return prediction_net(**kwargs).cpu().numpy()
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\gluon\lightning_module.py", line 305, in forward
+    distr = self.model.distr_output.distribution(sliced_params, loc, scale)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\distributions\distribution_output.py", line 137, in distribution
+    distr = self._base_distribution(distr_args)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\distributions\distribution_output.py", line 114, in _base_distribution
+    return self.distr_cls(*distr_args)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\distributions\studentT.py", line 39, in __init__
+    super().__init__(
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\distributions\studentT.py", line 61, in __init__
+    self._chi2 = Chi2(self.df)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\distributions\chi2.py", line 25, in __init__
+    super().__init__(0.5 * df, 0.5, validate_args=validate_args)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\distributions\gamma.py", line 53, in __init__
+    self.concentration, self.rate = broadcast_all(concentration, rate)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\distributions\utils.py", line 49, in broadcast_all
+    new_values = [
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\distributions\utils.py", line 50, in <listcomp>
+    v if is_tensor_like(v) else torch.tensor(v, **options) for v in values
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+2024-08-27 19:34:32,769 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 19:43:16,973 - ModelEvaluationLogger - ERROR - Error during model evaluation: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasSgemm( handle, opa, opb, m, n, k, &alpha, a, lda, b, ldb, &beta, c, ldc)`
+Traceback (most recent call last):
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 229, in evaluate_model
+    forecasts, ts = llama_models_obj.fine_tuned_model(max_epochs=max_epochs, initial_weights_path=initial_weights_path)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\models\llama.py", line 151, in fine_tuned_model
+    forecasts = list(tqdm(forecast_it, total=len(self.test_earnings_dataset), desc="Forecasting batches"))
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\tqdm\notebook.py", line 254, in __iter__
+    for obj in it:
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\tqdm\std.py", line 1178, in __iter__
+    for obj in iterable:
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\model\predictor.py", line 90, in predict
+    yield from self.forecast_generator(
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\model\forecast_generator.py", line 156, in __call__
+    outputs = predict_to_numpy(prediction_net, inputs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\functools.py", line 889, in wrapper
+    return dispatch(args[0].__class__)(*args, **kw)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\model\predictor.py", line 38, in _
+    return prediction_net(**kwargs).cpu().numpy()
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\gluon\lightning_module.py", line 286, in forward
+    params, loc, scale = self.model(
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\model\module.py", line 574, in forward
+    x = block(x, use_kv_cache)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\model\module.py", line 51, in forward
+    y = x + self.mlp(self.rms_2(x))
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\model\module.py", line 385, in forward
+    x = self.c_proj(x)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\linear.py", line 116, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasSgemm( handle, opa, opb, m, n, k, &alpha, a, lda, b, ldb, &beta, c, ldc)`
+2024-08-27 19:58:26,492 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-27 20:05:34,222 - ModelEvaluationLogger - ERROR - Error during model evaluation: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasSgemm( handle, opa, opb, m, n, k, &alpha, a, lda, b, ldb, &beta, c, ldc)`
+Traceback (most recent call last):
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 229, in evaluate_model
+    forecasts, ts = llama_models_obj.fine_tuned_model(max_epochs=max_epochs, initial_weights_path=initial_weights_path)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\models\llama.py", line 151, in fine_tuned_model
+    forecasts = list(tqdm(forecast_it, total=len(self.test_earnings_dataset), desc="Forecasting batches"))
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\tqdm\notebook.py", line 254, in __iter__
+    for obj in it:
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\tqdm\std.py", line 1178, in __iter__
+    for obj in iterable:
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\model\predictor.py", line 90, in predict
+    yield from self.forecast_generator(
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\model\forecast_generator.py", line 156, in __call__
+    outputs = predict_to_numpy(prediction_net, inputs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\functools.py", line 889, in wrapper
+    return dispatch(args[0].__class__)(*args, **kw)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\gluonts\torch\model\predictor.py", line 38, in _
+    return prediction_net(**kwargs).cpu().numpy()
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\gluon\lightning_module.py", line 286, in forward
+    params, loc, scale = self.model(
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\model\module.py", line 574, in forward
+    x = block(x, use_kv_cache)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\model\module.py", line 51, in forward
+    y = x + self.mlp(self.rms_2(x))
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\lag_llama\model\module.py", line 385, in forward
+    x = self.c_proj(x)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\torch\nn\modules\linear.py", line 116, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: CUDA error: CUBLAS_STATUS_INTERNAL_ERROR when calling `cublasSgemm( handle, opa, opb, m, n, k, &alpha, a, lda, b, ldb, &beta, c, ldc)`
+2024-08-28 09:59:24,661 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:10:01,157 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:10:01,271 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:10:01,273 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:10:01,286 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:10:20,314 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 10:10:20,423 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:10:20,424 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:30:19,972 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:35:05,421 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:35:05,590 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:35:05,591 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:35:05,599 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:36:01,398 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 10:36:01,513 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:36:01,514 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:39:05,080 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:40:38,272 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:40:38,368 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:40:38,368 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:40:38,373 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:40:39,946 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 10:40:40,045 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:40:40,045 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:40:40,579 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
+2024-08-28 10:42:33,394 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:42:33,487 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:42:33,488 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on earn.
+2024-08-28 10:42:33,492 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
+2024-08-28 10:42:34,806 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 10:42:34,894 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:42:34,896 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on earn.
+2024-08-28 10:42:35,228 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on hours
+2024-08-28 10:44:57,286 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:44:57,381 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:44:57,382 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on hours.
+2024-08-28 10:44:57,386 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on hours
+2024-08-28 10:44:58,979 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 10:44:59,085 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:44:59,086 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on hours.
+2024-08-28 10:44:59,415 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 10:44:59,415 - ModelEvaluationLogger - ERROR - Error during model evaluation: [Errno 2] No such file or directory: 'datasets\\job_melt_complete_data_2024.csv'
+Traceback (most recent call last):
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 224, in evaluate_model
+    llama_models_obj = llama_models(path_to_csv=path_to_csv, batch_size=batch_size, prediction_length=prediction_length, context_length_factor=context_length_factor, with_external=with_external, selected_features=selected_features)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\models\llama.py", line 117, in __init__
+    self.train_earnings_dataset, self.val_earnings_dataset, self.test_earnings_dataset = with_external_load_dataset(self.path_to_csv, selected_features) if with_external else No_external_load_dataset(self.path_to_csv)
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\data_processing.py", line 69, in with_external_load_dataset
+    df_earnings_ = pd.read_csv(path_to_csv, index_col=0, parse_dates=True)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\io\parsers\readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\io\parsers\readers.py", line 611, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\io\parsers\readers.py", line 1448, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\io\parsers\readers.py", line 1705, in _make_engine
+    self.handles = get_handle(
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\io\common.py", line 863, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: 'datasets\\job_melt_complete_data_2024.csv'
+2024-08-28 10:47:27,784 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:49:05,402 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:49:05,507 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:49:05,507 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:49:05,513 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:50:29,183 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:50:29,285 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:50:29,286 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:50:29,289 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:51:44,378 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:51:44,480 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:51:44,481 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:51:44,486 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on emp
+2024-08-28 10:51:46,075 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 10:51:46,174 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:51:46,175 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on emp.
+2024-08-28 10:51:46,598 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
+2024-08-28 10:54:58,445 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:54:58,552 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:54:58,553 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on earn.
+2024-08-28 10:54:58,557 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
+2024-08-28 10:55:53,727 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:55:53,819 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:55:53,820 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on earn.
+2024-08-28 10:55:53,823 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
+2024-08-28 10:57:17,581 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:57:17,676 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:57:17,677 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on earn.
+2024-08-28 10:57:17,679 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on earn
+2024-08-28 10:57:19,012 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 10:57:19,117 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:57:19,118 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on earn.
+2024-08-28 10:57:19,452 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on hours
+2024-08-28 10:59:18,407 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 10:59:18,516 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 10:59:18,517 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on hours.
+2024-08-28 10:59:18,521 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on hours
+2024-08-28 11:02:18,026 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 11:02:18,129 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:02:18,130 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on hours.
+2024-08-28 11:02:18,131 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on hours
+2024-08-28 11:04:50,915 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 11:04:51,010 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:04:51,011 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on hours.
+2024-08-28 11:04:51,013 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on hours
+2024-08-28 11:04:52,289 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 11:04:52,411 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:04:52,412 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on hours.
+2024-08-28 11:04:52,796 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 11:06:55,211 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 11:06:55,466 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:06:55,467 - ModelEvaluationLogger - ERROR - Error during model evaluation: can only convert an array of size 1 to a Python scalar
+Traceback (most recent call last):
+  File "C:\Users\Abdul-AzizAlNajjar\CU\DATA 5001\forcasting-labour-indicators\scripts\plots_and_evaluation.py", line 255, in evaluate_model
+    all_industries_mape = ts_metrics[ts_metrics['item_id'] == column_2024]['MAPE'].item()
+  File "C:\Users\Abdul-AzizAlNajjar\miniconda3\envs\pytorch_cuda124\lib\site-packages\pandas\core\base.py", line 418, in item
+    raise ValueError("can only convert an array of size 1 to a Python scalar")
+ValueError: can only convert an array of size 1 to a Python scalar
+2024-08-28 11:10:41,593 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 11:13:21,810 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 11:13:22,050 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:13:22,051 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-28 11:13:22,057 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 11:15:07,304 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 11:15:07,549 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:15:07,550 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-28 11:15:07,554 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 11:17:25,608 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 11:17:25,871 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:17:25,872 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-28 11:17:25,878 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 11:18:07,022 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 11:18:07,279 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:18:07,280 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-28 11:43:41,382 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 11:46:29,667 - ModelEvaluationLogger - DEBUG - Loaded fine-tuned llama model forecasts.
+2024-08-28 11:46:29,932 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:46:29,933 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
+2024-08-28 11:46:29,939 - ModelEvaluationLogger - INFO - Starting evaluation of lag-llama on job
+2024-08-28 11:47:15,505 - ModelEvaluationLogger - DEBUG - Loaded baseline llama model forecasts.
+2024-08-28 11:47:15,770 - ModelEvaluationLogger - INFO - Calculated aggregate metrics for lag-llama.
+2024-08-28 11:47:15,771 - ModelEvaluationLogger - INFO - Model evaluation completed for lag-llama on job.
