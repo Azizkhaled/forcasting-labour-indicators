@@ -161,7 +161,7 @@ if __name__ == "__main__":
     feature_prefixes = ['age_', 'pop_', 'covid_', 'indeed_', 'inf_',
                         'cpi_', 'gdp_', 'bus_', 'job_', 'ear_', 'emp_', 'hou_']
     dataset_creation = True
-    feat_backward_selection = False
+    feat_backward_selection = True
     feat_forward_selection= False
     datetime_stamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
     plots_dir = f"run-{datetime_stamp}"

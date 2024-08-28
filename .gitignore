@@ -1,3 +1,5 @@
 /datasets/
 /lightning_logs/
 /run*/
+model_evaluation.log
+model_evaluation.log.1
