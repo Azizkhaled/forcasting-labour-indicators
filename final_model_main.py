@@ -59,7 +59,7 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
         for i in range(1):
             for model_type in ['fine_tuned']:
                 result = evaluate_model(model_name, dataset_name, path_to_csv, model_type,
-                                        prediction_length=12, # orignal 11
+                                        prediction_length=3, # orignal 11
                                         with_external=True, context_length_factor=cl,
                                         selected_features=final_selected_features)
 
@@ -103,17 +103,17 @@ if __name__ == "__main__":
     feature_prefixes = ['age_', 'pop_', 'covid_', 'indeed_', 'inf_',
                         'cpi_', 'gdp_', 'bus_', 'job_', 'ear_', 'emp_', 'hou_']
     dataset_creation = True
-    feat_backward_selection = False
-    feat_forward_selection= True
+    feat_backward_selection = True
+    feat_forward_selection= False
     datetime_stamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
     plots_dir = f"run-{datetime_stamp}"
     model_name = 'lag-llama'
     datasets = [
-                # ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
+                ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
                 # ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
                 # ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
                 # ('job', 'datasets\job_melt_complete_data_2024.csv', 5.2),
-                ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
+                # ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
                 ]
 
     # Call the main function
