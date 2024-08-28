@@ -258,12 +258,10 @@ def convert_to_csv(df,input_var_size):
             df_col = [col for col in temp_df.columns if col.startswith('emp_VALUE_Health')]
             all_df_col = [col for col in temp_df.columns 
                         if any(col.startswith(all_ind) for all_ind in labour_ind)]
-            all_df_col = [col for col in all_df_col if col not in df_col]
         else:
             df_col = [col for col in temp_df.columns if col.startswith(ind)]
             all_df_col = [col for col in temp_df.columns 
-                        if any(col.startswith(all_ind) for all_ind in labour_ind if all_ind != ind)]
-        temp_df[all_df_col] = temp_df[all_df_col].shift(3)
+                        if any(col.startswith(all_ind) for all_ind in labour_ind)]
         temp_df = temp_df.ffill()
         temp_df.fillna(0,inplace=True)
         melt_df = temp_df.iloc[:,-int(input_var_size):][df_col]
@@ -272,12 +270,14 @@ def convert_to_csv(df,input_var_size):
         melt_df = melt_df.set_index('index')
         melt_df.head()
         df_gluton = pd.merge(melt_df,temp_df,how = 'left',left_index=True,right_index=True)
-        # print(df_gluton['feature_name'].unique())
-        df_gluton = df_gluton.drop(df_gluton['feature_name'].unique(),axis=1)
         if ind == 'emp_health_':
             df_gluton = df_gluton[df_gluton['feature_name']=='emp_VALUE_Health care and social assistance [62]']
+        elif ind == 'job_':
+            df_gluton = df_gluton[df_gluton['feature_name'].str.endswith('vacancies')]
+        df_gluton[all_df_col] = df_gluton.groupby('feature_name')[all_df_col].shift(3)
         if ind == 'job_':
             df_gluton = df_gluton[df_gluton.index >= '2015-07-01']
         else:
             df_gluton = df_gluton[df_gluton.index >= '2001-04-01']
+        
         df_gluton.to_csv('datasets/'+f'{ind}melt_complete_data.csv')
