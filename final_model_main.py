@@ -3,10 +3,17 @@ import pandas as pd
 import os
 from datetime import datetime
 from tqdm import tqdm
-from scripts.plots_and_evaluation import evaluate_model, plots_and_evaluation
+from scripts.plots_and_evaluation import evaluate_model, plots_and_evaluation, plots_and_evaluation_2
 from scripts.data_processing import data_creation
 from scripts.backward_selection import backward_selection
 from scripts.forward_selection import forward_selection
+
+import pickle
+import pandas as pd
+
+import re
+
+from scripts.plots_and_evaluation import evaluate_model, plots_and_evaluation, plots_and_evaluation_2
 
 def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation,feat_backward_selection, feat_forward_selection, datasets):
     """
@@ -57,32 +64,46 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
         best_score = float('inf')
         print(f'Processing {dataset_name} with {cl} context_length factor')
         for i in range(1):
-            for model_type in ['fine_tuned']:
+            for model_type in ['fine_tuned', 'baseline']:
                 result = evaluate_model(model_name, dataset_name, path_to_csv, model_type,
                                         prediction_length=3, # orignal 11
                                         with_external=True, context_length_factor=cl,
                                         selected_features=final_selected_features)
 
                 results.append(result)
-                if result.overall_mase < best_score:
-                    best_score = result.overall_mase
-                    best_result = result
+                if model_type == 'fine_tuned':
 
+                    if result.overall_mase < best_score:
+                        best_score = result.overall_mase
+                        best_result = result
+
+                        # File path for the result pickle file
+                        result_pickle_path = os.path.join(plots_dir, f'{model_type}_{result.dataset_name}_best_result.pkl')
+
+                        # Check if the file exists and delete it if it does
+                        if os.path.exists(result_pickle_path):
+                            os.remove(result_pickle_path)
+
+                        # Save the new best result
+                        with open(result_pickle_path, 'wb') as f:
+                            pickle.dump(best_result, f)
+                elif model_type == 'baseline':
                     # File path for the result pickle file
-                    result_pickle_path = os.path.join(plots_dir, f'MASE_{result.dataset_name}_best_result.pkl')
+                        result_pickle_path = os.path.join(plots_dir, f'{model_type}_{result.dataset_name}_best_result.pkl')
 
-                    # Check if the file exists and delete it if it does
-                    if os.path.exists(result_pickle_path):
-                        os.remove(result_pickle_path)
+                        # Check if the file exists and delete it if it does
+                        if os.path.exists(result_pickle_path):
+                            os.remove(result_pickle_path)
 
-                    # Save the new best result
-                    with open(result_pickle_path, 'wb') as f:
-                        pickle.dump(best_result, f)
+                        # Save the new best result
+                        with open(result_pickle_path, 'wb') as f:
+                            pickle.dump(best_result, f)
+
 
                 # Save plots
-                plot_obj = plots_and_evaluation(forecasts=result.forecasts, tss=result.ts, title=dataset_name + '_' + model_type)
-                save_path = os.path.join(plots_dir, f"{i}_MASE_{result.dataset_name}_{cl}_forecasts.png")
-                plot_obj.plot_forcasts_all(save_path=save_path)
+                # plot_obj = plots_and_evaluation(forecasts=result.forecasts, tss=result.ts, title=dataset_name + '_' + model_type)
+                # save_path = os.path.join(plots_dir, f"{i}_MASE_{result.dataset_name}_{cl}_forecasts.png")
+                # plot_obj.plot_forcasts_all(save_path=save_path)
 
                 # Create DataFrame
                 results_df = pd.DataFrame([result.to_dict() for result in results])
@@ -95,7 +116,24 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
                 #     'forecast': result.forecasts
                 # })-
                 # predictions_df.to_csv(os.path.join(plots_dir, f'{dataset_name}_2024_predictions.csv'), index=False)
+            
+            pickle_file_path_fine_tuned = f'{plots_dir}\\fine_tuned_{dataset_name}_best_result.pkl'
+            pickle_file_path_baseline = f'{plots_dir}\\baseline_{dataset_name}_best_result.pkl'
 
+            plot_only = None
+            # plot_only = 'Total, all industries' if dataset_name == 'job' else 'Industrial aggregate exclu'
+            # plot_only = 'health'
+
+            # Load the best result from the pickle file
+            with open(pickle_file_path_fine_tuned, 'rb') as f:
+                loaded_best_result_fine_tuned = pickle.load(f)
+            with open(pickle_file_path_baseline, 'rb') as f:
+                loaded_best_result_baseline = pickle.load(f)
+            plot_obj = plots_and_evaluation_2(forecasts= loaded_best_result_fine_tuned.forecasts, tss=loaded_best_result_fine_tuned.ts, forecasts_2=loaded_best_result_baseline.forecasts,
+                                      tss_2=loaded_best_result_baseline.ts, title = loaded_best_result_fine_tuned.dataset_name, plot_only=plot_only)
+            save_path = os.path.join(plots_dir, f"{loaded_best_result_fine_tuned.dataset_name}_both_forecasts_final.png")
+            plot_obj.plot_forcasts_all(Dataset_name = loaded_best_result_fine_tuned.dataset_name, save_path=save_path, zoom_to_predicted= False)
+                    
 if __name__ == "__main__":
     # Example parameters (you may customize these)
     df_path = 'datasets\emp_melt_complete_data.csv'

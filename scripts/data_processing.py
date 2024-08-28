@@ -272,7 +272,7 @@ def convert_to_csv(df,input_var_size):
         melt_df = melt_df.set_index('index')
         melt_df.head()
         df_gluton = pd.merge(melt_df,temp_df,how = 'left',left_index=True,right_index=True)
-        print(df_gluton['feature_name'].unique())
+        # print(df_gluton['feature_name'].unique())
         df_gluton = df_gluton.drop(df_gluton['feature_name'].unique(),axis=1)
         if ind == 'emp_health_':
             df_gluton = df_gluton[df_gluton['feature_name']=='emp_VALUE_Health care and social assistance [62]']
