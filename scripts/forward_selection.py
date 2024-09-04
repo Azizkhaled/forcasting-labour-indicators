@@ -64,7 +64,7 @@ def forward_selection(df, plots_dir, model_name, datasets, feature_prefixes):
 
             # Save results to CSV
             results_df = pd.DataFrame(results)
-            results_df.to_csv(os.path.join(plots_dir, f"{plots_dir}_evaluation_results.csv"), index=False)
+            results_df.to_csv(os.path.join(plots_dir, f"{plots_dir}_evaluation_results_fs.csv"), index=False)
 
     # Compile final selected features based on selected feature indices
     final_selected_features = []

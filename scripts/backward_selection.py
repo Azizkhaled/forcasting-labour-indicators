@@ -67,7 +67,7 @@ def backward_selection(df, plots_dir, model_name, datasets, feature_prefixes):
                     print(f'Removing feature group {i} improved score to {best_score}')
 
                 results_df = pd.DataFrame(results)
-                results_df.to_csv(os.path.join(plots_dir, f"{plots_dir}_evaluation_results.csv"), index=False)
+                results_df.to_csv(os.path.join(plots_dir, f"{plots_dir}_evaluation_results_bs.csv"), index=False)
 
             if not score_improved:
                 print("No improvement from removing any more features.")
