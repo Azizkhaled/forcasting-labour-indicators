@@ -57,10 +57,11 @@ def backward_selection(df, plots_dir, model_name, datasets, feature_prefixes):
                 # Convert the result to a dictionary and include the trial feature indices
                 result_dict = trial_result.to_dict(feature_indices=trial_feature_groups_idxs)
                 results.append(result_dict)
-
+                trial_score_value = trial_score.iloc[0] if isinstance(trial_score, pd.Series) else trial_score
+                print("trial score: ",trial_score_value,"##### best_score: ", best_score)
                 # If performance improved, update best score and remove the feature group
-                if trial_score < best_score:
-                    best_score = trial_score
+                if trial_score_value < best_score:
+                    best_score = trial_score_value
                     remaining_feature_groups_idxs = trial_feature_groups_idxs  # Update remaining groups
                     score_improved = True
                     print(f'Removing feature group {i} improved score to {best_score}')

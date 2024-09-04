@@ -35,13 +35,15 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
     # Load the dataset
     df = pd.read_csv(df_path)
 
+    print(df)
+
     #run backwards selection
     if feat_backward_selection:
-        selected_features = backward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
-        feature_prefixes = {item.split('_', 1)[0] for item in selected_features}
+        final_selected_features = backward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
+        # feature_prefixes = {item.split('_', 1)[0] for item in selected_features}
     elif feat_forward_selection:
-        selected_features = forward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
-        feature_prefixes = {item.split('_', 1)[0] for item in selected_features}
+        final_selected_features = forward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
+        # feature_prefixes = {item.split('_', 1)[0] for item in selected_features}
     
     # Compile final selected features based on remaining indices
     feature_groups = [
@@ -49,6 +51,8 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
         for prefix in feature_prefixes
     ]
     
+
+    print(remaining_feature_groups_idxs)
     final_selected_features = [feature for idx in remaining_feature_groups_idxs for feature in feature_groups[idx]]
 
     # final_selected_features = [feature for sublist in feature_groups for feature in sublist]
@@ -105,7 +109,7 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
         for i in range(1):
                 
                 result = evaluate_model(model_name, dataset_name, path_to_csv, model_type,
-                                        prediction_length=5, # orignal 11
+                                        prediction_length=6, # original 11
                                         with_external=True, context_length_factor=cl,
                                         selected_features=final_selected_features)
 
@@ -138,8 +142,8 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
         pickle_file_path_baseline = f'{plots_dir}\\baseline_{dataset_name}_best_result.pkl'
 
         # plot_only = None
-        plot_only = 'Total, all industries' if dataset_name == 'job' else 'Industrial aggregate exclu'
-        # plot_only = 'health'
+        # plot_only = 'Total, all industries' if dataset_name == 'job' else 'Industrial aggregate exclu'
+        plot_only = 'health'
 
         # Load the best result from the pickle file
         with open(pickle_file_path_fine_tuned, 'rb') as f:
@@ -155,26 +159,27 @@ def final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, p
                 
 if __name__ == "__main__":
     # Example parameters (you may customize these)
-    df_path = 'datasets\emp_melt_complete_data.csv'
-    remaining_feature_groups_idxs = [1,2,3, 4, 5, 6, 8, 9, 10,11,12]
-    remaining_feature_groups_idxs = [1, 3, 4, 5]
+    # df_path = 'datasets\emp_melt_complete_data.csv'
+    remaining_feature_groups_idxs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    # remaining_feature_groups_idxs = [1, 3, 4, 5]
     feature_prefixes = ['age_', 'pop_', 'covid_', 'indeed_', 'inf_',
                         'cpi_', 'gdp_', 'bus_', 'job_', 'ear_', 'emp_', 'hou_']
     dataset_creation = True
     feat_backward_selection = False
-    feat_forward_selection= True
+    feat_forward_selection= False
     datetime_stamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
     
     model_name = 'lag-llama'
     datasets = [
-                # ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
+                # ('emp', 'datasets\emp_melt_complete_data.csv', 12), 
                 # ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
                 # ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
                 ('job', 'datasets\job_melt_complete_data.csv', 6),
-                # ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 12)
+                # ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
                 ]
+    
     plots_dir = f"run-{datetime_stamp}-{datasets[0][0]}-{'fs' if feat_forward_selection else 'bs' if feat_backward_selection else ''}"
     # Call the main function
-    final_model_main(df_path, remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, feat_backward_selection, feat_forward_selection, datasets)
+    final_model_main(datasets[0][1], remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, feat_backward_selection, feat_forward_selection, datasets)
     print(f"this run start on {datetime_stamp} and ended on {datetime.now()}")
 
