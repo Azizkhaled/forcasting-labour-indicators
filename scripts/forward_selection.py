@@ -73,4 +73,4 @@ def forward_selection(df, plots_dir, model_name, datasets, feature_prefixes):
 
     print("Final selected features:", final_selected_features)
 
-    return final_selected_features
+    return final_selected_features, best_score

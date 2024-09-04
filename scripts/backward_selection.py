@@ -77,4 +77,4 @@ def backward_selection(df, plots_dir, model_name, datasets, feature_prefixes):
     final_selected_features = [feature for idx in remaining_feature_groups_idxs for feature in feature_groups[idx]]
     print("Final selected features:", final_selected_features)
 
-    return final_selected_features
+    return final_selected_features,best_score
