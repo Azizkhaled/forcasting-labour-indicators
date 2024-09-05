@@ -15,7 +15,7 @@ import re
 
 from scripts.plots_and_evaluation import evaluate_model, plots_and_evaluation, plots_and_evaluation_2
 
-def final_model_main(remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation,feat_backward_selection, feat_forward_selection, datasets):
+def final_model_main(feature_prefixes, model_name, dataset_creation,feat_backward_selection, feat_forward_selection, datasets):
     """
     Main function to evaluate models with selected features and save the results.
 
@@ -37,12 +37,16 @@ def final_model_main(remaining_feature_groups_idxs, feature_prefixes, plots_dir,
         # Load the dataset
         df = pd.read_csv(path_to_csv)
 
+        # Ensure the results directory exists
+        plots_dir = f"run-{datetime_stamp}-{dataset_name}-{'fs+bs' if feat_backward_selection and feat_forward_selection else 'fs' if feat_forward_selection else 'bs' if feat_backward_selection else ''}"
+        os.makedirs(plots_dir, exist_ok=True)
+
         #run feature selection
 
         if feat_backward_selection:
-            bs_final_selected_features, bs_best_score = backward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
+            bs_final_selected_features, bs_best_score = backward_selection(df, plots_dir, model_name, dataset_name, path_to_csv, cl, feature_prefixes)
         if feat_forward_selection:
-            fs_final_selected_features, fs_best_score = forward_selection(df, plots_dir, model_name, datasets, feature_prefixes)
+            fs_final_selected_features, fs_best_score = forward_selection(df, plots_dir, model_name, dataset_name, path_to_csv, cl, feature_prefixes)
         
         if feat_forward_selection and feat_backward_selection:
             if bs_best_score <= fs_best_score:
@@ -55,8 +59,7 @@ def final_model_main(remaining_feature_groups_idxs, feature_prefixes, plots_dir,
             final_selected_features = bs_final_selected_features 
         else:
             final_selected_features = [col for col in df.columns]
-        # Ensure the results directory exists
-        os.makedirs(plots_dir, exist_ok=True)
+        
 
         # Evaluate models and save plots
         results = []
@@ -154,7 +157,7 @@ def final_model_main(remaining_feature_groups_idxs, feature_prefixes, plots_dir,
 if __name__ == "__main__":
     # Example parameters (you may customize these)
     # df_path = 'datasets\emp_melt_complete_data.csv'
-    remaining_feature_groups_idxs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    # remaining_feature_groups_idxs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     # remaining_feature_groups_idxs = [1, 3, 4, 5]
     feature_prefixes = ['age_', 'pop_', 'covid_', 'indeed_', 'inf_',
                         'cpi_', 'gdp_', 'bus_', 'job_', 'ear_', 'emp_', 'hou_']
@@ -167,15 +170,15 @@ if __name__ == "__main__":
     datasets = [
                 ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
                 ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
-                ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
-                ('job', 'datasets\job_melt_complete_data.csv', 6),
+                # ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
+                # ('job', 'datasets\job_melt_complete_data.csv', 6),
                 # ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
                 ]
     
-    plots_dir = f"run-{datetime_stamp}-{datasets[0][0]}-{'fs+bs' if feat_backward_selection and feat_forward_selection else 'fs' if feat_forward_selection else 'bs' if feat_backward_selection else ''}"
+    
     # Call the main function
 
-    final_model_main(remaining_feature_groups_idxs, feature_prefixes, plots_dir, model_name, dataset_creation, feat_backward_selection, feat_forward_selection, datasets)
+    final_model_main(feature_prefixes, model_name, dataset_creation, feat_backward_selection, feat_forward_selection, datasets)
 
     print(f"this run start on {datetime_stamp} and ended on {datetime.now()}")
 
