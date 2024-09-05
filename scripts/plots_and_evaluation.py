@@ -12,7 +12,8 @@ from models.feedforward import run_feed_forward_model
 from models.tft import run_tft
 from models.llama import llama_models
 import logging
-from logging.handlers import RotatingFileHandler
+# from logging.handlers import RotatingFileHandler
+from concurrent_log_handler import ConcurrentRotatingFileHandler
 
 class plots_and_evaluation:
     
@@ -211,7 +212,7 @@ class EvaluationResults:
 # Setup logging
 logger = logging.getLogger('ModelEvaluationLogger')
 logger.setLevel(logging.DEBUG)
-handler = RotatingFileHandler('model_evaluation.log', maxBytes=100000, backupCount=5)
+handler = ConcurrentRotatingFileHandler('model_evaluation.log', maxBytes=100000, backupCount=5)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
