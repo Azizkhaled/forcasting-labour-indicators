@@ -144,6 +144,8 @@ def time_series_conversion(file_path,var_name,date_variable,category_variables,v
     elif file_path == 'covid19-download.csv':
         df[date_variable[0]] = pd.to_datetime(df[date_variable[0]])
         df = df[df['prname'] == "Canada"]
+        df = df[[date_variable[0],category_variables[0],values_variables[0]]]
+        df['numtotal_last7'] = pd.to_numeric(df['numtotal_last7'], errors='coerce').fillna(0) #this line changes the placeholder strings to 0 so we don't get a billion in the sum...
         df = df.groupby(df[date_variable[0]].dt.to_period('M')).agg({
             date_variable[0]: 'first',
             'prname': 'first', 
