@@ -253,16 +253,16 @@ def data_creation(time_steps):
 
 
 def convert_to_csv(df,input_var_size):
-    labour_ind = ['job_','ear_','emp_','hou_','emp_health_']
+    labour_ind = ['job_','ear_','emp_','hou_','emp_health_','emp_total_']
     for ind in labour_ind:
         temp_df = df.copy()
         if ind == 'emp_health_':
             df_col = [col for col in temp_df.columns if col.startswith('emp_VALUE_Health')]
-            all_df_col = [col for col in temp_df.columns 
-                        if any(col.startswith(all_ind) for all_ind in labour_ind)]
+        elif ind == 'emp_total_':
+            df_col = [col for col in temp_df.columns if col == 'emp_VALUE_Industrial aggregate excluding unclassified businesses [11-91N]']
         else:
             df_col = [col for col in temp_df.columns if col.startswith(ind)]
-            all_df_col = [col for col in temp_df.columns 
+        all_df_col = [col for col in temp_df.columns 
                         if any(col.startswith(all_ind) for all_ind in labour_ind)]
         temp_df = temp_df.ffill()
         temp_df.fillna(0,inplace=True)
@@ -274,6 +274,8 @@ def convert_to_csv(df,input_var_size):
         df_gluton = pd.merge(melt_df,temp_df,how = 'left',left_index=True,right_index=True)
         if ind == 'emp_health_':
             df_gluton = df_gluton[df_gluton['feature_name']=='emp_VALUE_Health care and social assistance [62]']
+        elif ind == 'emp_total_':
+            df_gluton = df_gluton[df_gluton['feature_name']=='emp_VALUE_Industrial aggregate excluding unclassified businesses [11-91N]']
         elif ind == 'job_':
             df_gluton = df_gluton[df_gluton['feature_name'].str.endswith('vacancies')]
         df_gluton[all_df_col] = df_gluton.groupby('feature_name')[all_df_col].shift(3)

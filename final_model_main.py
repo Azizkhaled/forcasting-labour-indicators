@@ -168,11 +168,12 @@ if __name__ == "__main__":
     
     model_name = 'lag-llama'
     datasets = [
-                ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
+                # ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
                 # ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
                 # ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
                 # ('job', 'datasets\job_melt_complete_data.csv', 6),
                 # ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
+                ('emp_t', 'datasets\emp_total_melt_complete_data.csv', 6)
                 ]
     
     
