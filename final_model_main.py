@@ -58,7 +58,7 @@ def final_model_main(feature_prefixes, model_name, dataset_creation,feat_backwar
         elif not(feat_forward_selection) and feat_backward_selection:
             final_selected_features = bs_final_selected_features 
         else:
-            final_selected_features = [col for col in df.columns]
+            final_selected_features = [col for col in df.columns if col != 'Unnamed: 0']
         
 
         # Evaluate models and save plots
@@ -162,18 +162,18 @@ if __name__ == "__main__":
     feature_prefixes = ['age_', 'pop_', 'covid_', 'indeed_', 'inf_',
                         'cpi_', 'gdp_', 'bus_', 'job_', 'ear_', 'emp_', 'hou_']
     dataset_creation = True
-    feat_backward_selection = True
-    feat_forward_selection= True
+    feat_backward_selection = False
+    feat_forward_selection= False
     datetime_stamp = datetime.now().strftime("%Y-%m-%d-%H-%M")
     
     model_name = 'lag-llama'
     datasets = [
-                # ('emp', 'datasets\emp_melt_complete_data.csv', 6), 
+                ('emp', 'datasets\emp_melt_complete_data.csv', 1.2), 
                 # ('earn', 'datasets\ear_melt_complete_data.csv', 6), 
                 # ('hours', 'datasets\hou_melt_complete_data.csv', 6), 
                 # ('job', 'datasets\job_melt_complete_data.csv', 6),
                 # ('emp_h', 'datasets\emp_health_melt_complete_data.csv', 6)
-                ('emp_t', 'datasets\emp_total_melt_complete_data.csv', 6)
+                # ('emp_t', 'datasets\emp_total_melt_complete_data.csv', 1.2)
                 ]
     
     
